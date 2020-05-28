@@ -1,4 +1,4 @@
-# RSK Truffle OZ Box
+# RSK Truffle Token Box
 
 Truffle box with everything you need to start creating a token using Open Zeppelin smart contracts library in Truffle framework, connected to a RSK local node or RSK testnet.
 It includes network configurations for local node (regtest) and Testnet.
