@@ -95,9 +95,9 @@ Take a look at the smart contract `Token.sol`. You can check it out in folder `c
 
 ![Token.sol](/images/image-19.png)
 
-This smart contract is a mintable [ERC20](https://eips.ethereum.org/EIPS/eip-20) token. This means that, in addition to the standard ERC20 specification, it has a function for issuing new tokens.
-
 > Token.sol has only 7 code lines!
+
+This smart contract is a mintable [ERC20](https://eips.ethereum.org/EIPS/eip-20) token. This means that, in addition to the standard ERC20 specification, it has a function for issuing new tokens.
 
 To create our ERC20 Token, we will import `ERC20Mintable` from Open Zeppelin. 
 This library itself imports several other libraries such as `SafeMath.sol`, the standards for this kind of token, and the capability to mint tokens.
