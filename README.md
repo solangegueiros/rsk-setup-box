@@ -127,7 +127,10 @@ And the `migrate output` should be similar to:
 
 6. Running contract tests.
 
-This Truffle box also comes with the file `TestToken.js` for testing the smart contract. You can check it out in the `test` folder.
+This Truffle box also comes with the file `TestToken.js` which include some examples for testing the smart contract. 
+You can check it out in the `test` folder.
+
+There are many other tests which can be done to check an ERC20 token.
 
 Run this command in the development console:
 
@@ -159,14 +162,22 @@ In the Truffle console, enter:
 const accounts = await web3.eth.getAccounts()
 ```
 
-To view each account:
+Don’t worry about the `undefined` return, it is ok. See the addresses after it by entering the command below:
+
+```javascript
+accounts
+```
+
+And to view each account:
 
 ```javascript
 accounts[0]
 accounts[1]
 ```
 
-![accounts](/assets/img/tutorials/create-a-token/image-30.png)
+Take a look in the results:
+
+![accounts](/images/image-05.png)
 
 2. Interact with the token using Truffle console.
 
@@ -175,8 +186,6 @@ First of all, connect with your token
 ```javascript
 const token = await Token.deployed()
 ```
-
-![token instance](/assets/img/tutorials/create-a-token/image-31.png)
 
 3. Confirm if our instance is OK.
 
@@ -187,7 +196,7 @@ This will display the published address of the smart contract, and the transacti
 token. [TAB] [TAB]
 ```
 
-![token tab tab](/assets/img/tutorials/create-a-token/image-32.png)
+![token tab tab](/images/image-06.png)
 
 4. Check the total supply
 
@@ -196,8 +205,6 @@ To check if we have tokens already minted, call the `totalSupply` function:
 ```javascript
 (await token.totalSupply()).toString()
 ```
-
-![totalSupply 0](/assets/img/tutorials/create-a-token/image-33.png)
 
 The returned value is 0, which is expected, since we did not perform any initial mint when we deployed the token.
 
@@ -209,7 +216,9 @@ To check the balance of an account, call the `balanceOf` function. For example, 
 (await token.balanceOf(accounts[0])).toString()
 ```
 
-![balanceOf 0](/assets/img/tutorials/create-a-token/image-34.png)
+Take a look in the results of total supply and balanceOf:
+
+![total supply and balanceOf 0](/images/image-09.png)
 
 The returned value is also 0, which is expected, since we did not make any initial mint when we deployed the token, and by definition no accounts can have any tokens yet.
 
@@ -223,7 +232,7 @@ token.mint(accounts[0], 10000)
 
 This command sent a transaction to mint 100 tokens for account 0. 
 
-![token.mint account 0](/assets/img/tutorials/create-a-token/image-45.png)
+![token.mint account 0](/images/image-10.png)
 
 You can also mint to a specific address, `0xa52515946DAABe072f446Cc014a4eaA93fb9Fd79`:
 
@@ -231,7 +240,7 @@ You can also mint to a specific address, `0xa52515946DAABe072f446Cc014a4eaA93fb9
 token.mint("0xa52515946DAABe072f446Cc014a4eaA93fb9Fd79", 10000)
 ```
 
-![token.mint address](/assets/img/tutorials/create-a-token/image-36.png)
+![token.mint address](/images/image-11.png)
 
 7. Reconfirm the token balance
 
@@ -241,8 +250,6 @@ Check the balance of account 0 again:
 (await token.balanceOf(accounts[0])).toString()
 ```
 
-![balanceOf account 100](/assets/img/tutorials/create-a-token/image-37.png)
-
 The returned value is 10000, which is 100 with 2 decimal places of precision. This is exactly what we expected, as we issued 100 tokens
 
 Also, you can get the balance of a specific address, for example, `0xa52515946DAABe072f446Cc014a4eaA93fb9Fd79`:
@@ -251,7 +258,9 @@ Also, you can get the balance of a specific address, for example, `0xa52515946DA
 (await token.balanceOf("0xa52515946DAABe072f446Cc014a4eaA93fb9Fd79")).toString()
 ```
 
-![balanceOf address 100](/assets/img/tutorials/create-a-token/image-38.png)
+Take a look in the results:
+
+![balanceOf account 0 and address with 10000](/images/image-13.png)
 
 8. Check the total supply (again)
 
@@ -261,10 +270,10 @@ Check the total supply again:
 (await token.totalSupply()).toString()
 ```
 
-![totalSupply 300](/assets/img/tutorials/create-a-token/image-39.png)
+![totalSupply 20000](/images/image-15.png)
 
-The returned value is 30000, which is 300 with 2 decimal places of precision. 
-After minting 100 tokens for 3 accounts, this is perfect!
+The returned value is 20000, which is 200 with 2 decimal places of precision. 
+After minting 100 tokens for 2 accounts, this is perfect!
 
 9. Transfer tokens
 
@@ -275,17 +284,31 @@ This can be done by calling the `transfer` function.
 token.transfer(accounts[2], 4000, {from: accounts[0]})
 ```
 
-![token.transfer](/assets/img/tutorials/create-a-token/image-40.png)
+![token.transfer](/images/image-16.png)
 
-Account 2 had no tokens before the transfer, and now it should have 40. Let’s check the balance of account 2:
+Account 2 had no tokens before the transfer, and now it should have 40. Account 1 must have 60 tokens. Also the total supply will be the same.
+
+Let’s check the balance of each account and the total supply:
 
 ```javascript
 (await token.balanceOf(accounts[2])).toString()
+(await token.balanceOf(accounts[0])).toString()
+(await token.totalSupply()).toString()
 ```
 
-![balanceOf account 3](/assets/img/tutorials/create-a-token/image-41.png)
+Take a look in the results:
 
-Great! The balance of account 2 is correct.
+![balances after transfer](/images/image-17.png)
+
+Great! The balances of both accounts and the total supply are correct.
+
+### Exit Truffle console
+
+In the Truffle console, enter this command to exit the terminal:
+
+```shell
+.exit
+```
 
 ## Using RSK networks
 
@@ -353,7 +376,7 @@ First ensure you have a local node running.
 truffle console
 ```
 
-> Any network defined with the name `development` is considered the default network.
+> Any network defined with the name development is considered the default network.
 
 ### Connect to RSK Testnet or Mainnet
 
@@ -387,19 +410,12 @@ To get the network ID, run this command:
 
 For the local node, the network ID is `33`.
 
-![getId local](/assets/img/tutorials/setup-truffle-oz/image-31.png)
+![getId local](/images/image-18.png)
 
-And for testnet, it is `31`.
-
-![getId testnet](/assets/img/tutorials/setup-truffle-oz/image-32.png)
-
-### Exit Truffle console
-
-In the Truffle console, enter this command to exit the terminal:
-
-```shell
-.exit
-```
+List of network IDs:
+- mainnet: 30
+- testnet: 31
+- regtest (local node): 33
 
 ### Compile and migrate the smart contracts. 
 
@@ -412,6 +428,14 @@ truffle migrate
 ```
 
 ### Where to go from here
+
+Interact with the token published on an RSK network using Truffle console, doing the same steps which was done before:
+
+- Get your accounts
+- Connect with your token
+- Check the total supply or the token balance
+- Mint tokens
+- Transfer tokens
 
 At this point, we have installed all requirements and created a token using Truffle framework and Open Zeppelin smart contracts library,
 connected to an RSK local node (Regtest), the RSK Testnet and the RSK Mainnet.
